@@ -40,7 +40,8 @@ export class ToastManager extends Component<{}, {
             toastMessage: "",
             backgroundColor: '#aaa',
             dismissGesture: Gesture.Tap().runOnJS(true).onEnd(() => {
-                ToastManager.toastInstance.hideAllToasts()
+                console.log("Tapped to duss")
+                this.hideAllToasts()
             })
         }
         this.progressValue = new Animated.Value(0)

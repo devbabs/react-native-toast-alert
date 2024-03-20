@@ -11,11 +11,32 @@ npm install react-native-toast-alert
 ## Usage
 
 ```js
-import { multiply } from 'react-native-toast-alert';
+// ...
+import ToastManager { Toast } from 'react-native-toast-alert'
+
+const App = () => {
+  const showToast = () => {
+    Toast.success("Successful...", {
+      dissmissMode: 'swipe',
+      autoDismiss: false,
+      progress: true,
+      bounce: true,
+    })
+  }
+
+  return (
+    <View>
+      <ToastManager />
+      <Touchable
+        onPress={() => showToast()}
+      >
+        Show
+      </Touchable>
+    </View>
+  )
+})
 
 // ...
-
-const result = await multiply(3, 7);
 ```
 
 ## Contributing
