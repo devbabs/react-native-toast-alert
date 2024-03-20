@@ -93,7 +93,7 @@ export class ToastManager extends Component<{}, {
             this.setState({
                 dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture) => {
                     if (gesture.translationY < 0) {
-                        ToastManager.toastInstance.hideAllToasts()
+                        this.hideAllToasts()
                     }
                 })
             })
@@ -133,12 +133,10 @@ export class ToastManager extends Component<{}, {
     }
 
     hideAllToasts = () => {
-        Animated.parallel([
-            Animated.timing(this.topValue, {
-                toValue: this.defaultToastPosition,
-                useNativeDriver: true
-            })
-        ]).start()
+        Animated.timing(this.topValue, {
+            toValue: this.defaultToastPosition,
+            useNativeDriver: true
+        }).start()
     }
 
     render() {
