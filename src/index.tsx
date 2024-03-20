@@ -1,3 +1,10 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
+import ToastManager from "./ToastManager";
+
+export const Toast = {
+	success: ToastManager.success,
+	error: ToastManager.error,
+	info: ToastManager.info,
+	warning: ToastManager.warning,
 }
+
+export default ToastManager
