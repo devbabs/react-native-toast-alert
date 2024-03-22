@@ -1,4 +1,4 @@
-import ToastManager from "./ToastManager";
+import ToastManager from "./components/ToastManager";
 
 export const Toast = {
 	success: ToastManager.success,
