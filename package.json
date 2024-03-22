@@ -49,7 +49,7 @@
   },
   "homepage": "https://github.com/devbabs/react-native-toast-alert#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "@devbabs:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
