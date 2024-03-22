@@ -7,17 +7,19 @@ interface ToastOptions {
     progress?: boolean,
     bounce?: boolean,
     autoDismiss?: boolean,
-    dissmissMode?: 'tap' | 'swipe'
+    centerText?: boolean,
+    dismissMode?: 'tap' | 'swipe'
 }
 
 export class ToastManager extends Component<{}, {
     backgroundColor: string
     dismissGesture: any
-    toastMessage: any
-    showProgress: any
-    autoDismiss: any
-    toastSpeed: any
-    dismissMode: any
+    toastMessage: string
+    showProgress: boolean
+    autoDismiss: boolean
+    centerText: boolean
+    toastSpeed: number
+    dismissMode: 'tap' | 'swipe'
 }> {
     defaultToastPosition = -Dimensions.get('window').height
     defaultToastDuration = 3000
@@ -34,8 +36,9 @@ export class ToastManager extends Component<{}, {
         ToastManager.toastInstance = this
         this.state = {
             autoDismiss: true,
-            dismissMode: true,
+            dismissMode: 'tap',
             showProgress: false,
+            centerText: false,
             toastSpeed: 500,
             toastMessage: "",
             backgroundColor: '#aaa',
@@ -87,10 +90,11 @@ export class ToastManager extends Component<{}, {
 
         this.setState({
             toastMessage: text,
-            showProgress: options?.progress ?? false
+            showProgress: options?.progress ?? false,
+            centerText: options?.centerText ?? false
         })
 
-        if (options?.dissmissMode == 'swipe') {
+        if (options?.dismissMode == 'swipe') {
             this.setState({
                 dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture) => {
                     if (gesture.translationY < 0) {
@@ -160,10 +164,10 @@ export class ToastManager extends Component<{}, {
                         <View
                         style={{
                             padding: 15,
-                            paddingTop: 170,
+                            paddingTop: 180,
                         }}
                     >
-                        <Text style={{color: '#FFF'}}>
+                        <Text style={{color: '#FFF', textAlign: this.state.centerText ? 'center' : 'left'}}>
                             {this.state.toastMessage}
                         </Text>
                     </View>
