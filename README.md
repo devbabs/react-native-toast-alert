@@ -15,6 +15,8 @@ Toast.success("Welcome. you will definitely love this toast package.😉")
   <img src="./Toast.info.gif" width="300" style="margin-right: 20px;max-width: 300px" />
 </div>
 
+<!-- ## [View Live Demo]() -->
+
 ## Installation
 
 ```sh
@@ -65,11 +67,11 @@ const App = () => {
   }
 
   const showInfoToast = () => {
-    Toast.error("Hi, you're still online.")
+    Toast.info("Hi, you're still online.")
   }
 
   const showWarningToast = () => {
-    Toast.error("Your wallet balance is running low.")
+    Toast.warning("Your wallet balance is running low.")
   }
 
   return (
