@@ -1,5 +1,5 @@
 {
-  "name": "react-native-toast-alert",
+  "name": "@devbabs/react-native-toast-alert",
   "version": "0.1.5",
   "description": "My awesome react-native-toast-alert library",
   "main": "lib/commonjs/index",
