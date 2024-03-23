@@ -1,6 +1,20 @@
 # react-native-toast-alert
 
-My awesome react-native-toast-alert library
+An awesome package for cool toast alerts in react-native 🚀
+
+```js
+Toast.success("Welcome. you will definitely love this toast package.😉")
+```
+
+<!-- ![](./Toast.success.gif) -->
+<div style="margin-bottom: 20px">
+  <img src="./Toast.success.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
+  <img src="./Toast.error.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
+</div>
+<div>
+  <img src="./Toast.warning.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
+  <img src="./Toast.info.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
+</div>
 
 ## Installation
 
@@ -10,25 +24,60 @@ npm install react-native-toast-alert
 
 ## Usage
 
+### Step 1
+
+Import `ToastManager` and `Toast`.
+
 ```js
 // ...
 import ToastManager { Toast } from 'react-native-toast-alert'
+```
 
+### Step 2
+
+Add `ToastManager` component to the top of your app component structure.
+```js
 const App = () => {
-  const showToast = () => {
-    Toast.success("Successful...", {
-      dissmissMode: 'swipe',
-      autoDismiss: false,
-      progress: true,
-      bounce: true,
-    })
+  return (
+    <View>
+      <ToastManager />
+      <App>
+        // Other parts of your application content can go here
+      </App>
+    </View>
+  )
+})
+```
+
+### Step 3 (Final Step)
+
+Call any of the `Toast` methods directly
+
+```js
+const App = () => {
+  // ...
+
+  const showSuccessToast = () => {
+    Toast.success("Yaay!!! You made it here...🚀🚀🚀")
+  }
+
+  const showErrorToast = () => {
+    Toast.error("Error, looks like something went wrong.🙁")
+  }
+
+  const showInfoToast = () => {
+    Toast.error("Hi, you're still online.")
+  }
+
+  const showWarningToast = () => {
+    Toast.error("Your wallet balance is running low.")
   }
 
   return (
     <View>
       <ToastManager />
       <Touchable
-        onPress={() => showToast()}
+        onPress={() => showSuccessToast()}
       >
         Show
       </Touchable>
@@ -39,11 +88,13 @@ const App = () => {
 // ...
 ```
 
-## TODO
+# Happy Coding 🥂
+
+<!-- ## TODO
 1. Add custom style to alert
 2. Allow custom callback
 3. Add option to disiss alert manually
-4. Display custom component
+4. Display custom component -->
 
 ## Contributing
 
