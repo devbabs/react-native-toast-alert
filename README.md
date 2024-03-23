@@ -39,6 +39,12 @@ const App = () => {
 // ...
 ```
 
+## TODO
+1. Add custom style to alert
+2. Allow custom callback
+3. Add option to disiss alert manually
+4. Display custom component
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
