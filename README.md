@@ -6,14 +6,13 @@ An awesome package for cool toast alerts in react-native 🚀
 Toast.success("Welcome. you will definitely love this toast package.😉")
 ```
 
-<!-- ![](./Toast.success.gif) -->
 <div style="margin-bottom: 20px;display: flex">
-  <img src="./Toast.success.gif" width="300" style="margin-right: 20px;max-width: 100px" />
-  <img src="./Toast.error.gif" width="300" style="margin-right: 20px;max-width: 100px" />
+  <img src="./Toast.success.gif" width="300" style="margin-right: 20px;max-width: 300px" />
+  <img src="./Toast.error.gif" width="300" style="margin-right: 20px;max-width: 300px" />
 </div>
 <div style="margin-bottom: 20px;display: flex">
-  <img src="./Toast.warning.gif" width="300" style="margin-right: 20px;max-width: 100px" />
-  <img src="./Toast.info.gif" width="300" style="margin-right: 20px;max-width: 100px" />
+  <img src="./Toast.warning.gif" width="300" style="margin-right: 20px;max-width: 300px" />
+  <img src="./Toast.info.gif" width="300" style="margin-right: 20px;max-width: 300px" />
 </div>
 
 ## Installation
@@ -24,7 +23,7 @@ npm install react-native-toast-alert
 
 ## Usage
 
-### Step 1
+### 👉🏽 Step 1
 
 Import `ToastManager` and `Toast`.
 
@@ -33,7 +32,7 @@ Import `ToastManager` and `Toast`.
 import ToastManager { Toast } from 'react-native-toast-alert'
 ```
 
-### Step 2
+### 👉🏽 Step 2
 
 Add `ToastManager` component to the top of your app component structure.
 ```js
@@ -49,7 +48,7 @@ const App = () => {
 })
 ```
 
-### Step 3 (Final Step)
+### 👉🏽 Step 3 (Final Step)
 
 Call any of the `Toast` methods directly
 
@@ -87,8 +86,20 @@ const App = () => {
 
 // ...
 ```
+## Note:
+Each of the methods on the toast take 2 parameters: The toast message and an optional list of configuration options.
 
-# Happy Coding 🥂
+## Options for Configuraton
+| Option | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| duration | How long the toast will be visible for (milliseconds) | number | 2000 |
+| progress | Show progress bar | boolean | false |
+| bounce | Add bounce effect while showing toast | boolean | false |
+| autoDismiss | Dismiss toast automatically | boolean | true |
+| centerText | Align the text in the toast centrally | boolean | false |
+| dismissMode | How to dismiss the toast manually. (This is useful if you set autoDismiss to false) | 'tap' or 'swipe' | tap |
+
+## Happy Coding 🥂
 
 <!-- ## TODO
 1. Add custom style to alert
@@ -106,4 +117,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+<!-- Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob) -->
