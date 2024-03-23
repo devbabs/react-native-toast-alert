@@ -7,11 +7,11 @@ Toast.success("Welcome. you will definitely love this toast package.😉")
 ```
 
 <!-- ![](./Toast.success.gif) -->
-<div style="margin-bottom: 20px">
+<div style="margin-bottom: 20px;display: flex">
   <img src="./Toast.success.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
   <img src="./Toast.error.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
 </div>
-<div>
+<div style="margin-bottom: 20px;display: flex">
   <img src="./Toast.warning.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
   <img src="./Toast.info.gif" style="margin-right: 20px;width: 40%;max-width: 400px" />
 </div>
