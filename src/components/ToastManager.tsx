@@ -1,6 +1,6 @@
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
 import React, { Component } from 'react'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 
 interface ToastOptions {
     duration?: number,
@@ -96,7 +96,7 @@ export class ToastManager extends Component<{}, {
 
         if (options?.dismissMode == 'swipe') {
             this.setState({
-                dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture) => {
+                dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
                     if (gesture.translationY < 0) {
                         this.hideAllToasts()
                     }
