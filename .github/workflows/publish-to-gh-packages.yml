@@ -25,12 +25,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-          scope: '@devbabs'
-      - run: npm ci
-      - run: npm publish --registry=https://npm.pkg.github.com/@devbabs --access public
+      with:
+        node-version: 16
+        registry-url: https://npm.pkg.github.com/
+        scope: '@devbabs'
+        run: |
+            # Change publish registry
+            echo "$(jq '.publishConfig.registry = "https://npm.pkg.github.com"' package.json)" > package.json
+            # Add organisation scope to package name
+            echo "$(jq '.name = "@devbabs/react-native-toast-alert"' package.json)" > package.json
+            # And publish this boy
+            npm publish --@devbabs:registry=https://npm.pkg.github.com
+      # - run: npm ci
+      # - run: npm publish --registry=https://npm.pkg.github.com/@devbabs --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
