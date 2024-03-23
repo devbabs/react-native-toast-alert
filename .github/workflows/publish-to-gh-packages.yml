@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+          scope: '@devbabs'
       - run: npm ci
       - run: npm publish --registry=https://npm.pkg.github.com/@devbabs --access public
         env:
