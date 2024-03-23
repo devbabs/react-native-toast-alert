@@ -1,5 +1,5 @@
 {
-  "name": "@devbabs/react-native-toast-alert",
+  "name": "react-native-toast-alert",
   "version": "0.1.5",
   "description": "My awesome react-native-toast-alert library",
   "main": "lib/commonjs/index",
@@ -48,9 +48,6 @@
     "url": "https://github.com/devbabs/react-native-toast-alert/issues"
   },
   "homepage": "https://github.com/devbabs/react-native-toast-alert#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@devbabs"
-  },
   "devDependencies": {
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^29.5.5",
