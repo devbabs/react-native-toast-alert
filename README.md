@@ -15,7 +15,7 @@ Toast.success("Welcome. you will definitely love this toast package.😉")
   <img src="./Toast.info.gif" width="300" style="margin-right: 20px;max-width: 300px" />
 </div>
 
-<!-- ## [View Live Demo]() -->
+## [View Live Demo](https://snack.expo.dev/iIRGkATiUtxLMDUwNYLp7)
 
 ## Installation
 
