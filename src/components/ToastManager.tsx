@@ -1,4 +1,4 @@
-import { Animated, Dimensions, StyleSheet } from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import React, { Component } from 'react'
 import { Gesture, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 import Toast from './Toast'
