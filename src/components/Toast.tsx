@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, type ViewStyle } from 'react-native'
 import React, { useEffect } from 'react'
 import { GestureDetector } from 'react-native-gesture-handler'
 import Animated, {Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated'
@@ -33,7 +33,7 @@ const Toast = ({
     const progressValue = useSharedValue(Dimensions.get('window').width)
     const topValue = useSharedValue(initialToastPosition)
 
-    let hideToastTimeout
+    let hideToastTimeout: NodeJS.Timeout
 
     const dismissToast = () => {
         topValue.value = withTiming(initialToastPosition, {

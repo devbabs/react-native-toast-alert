@@ -1,6 +1,6 @@
-import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Animated, Dimensions, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
-import { Gesture, GestureDetector, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
+import { Gesture, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 import Toast from './Toast'
 
 interface ToastOptions {
@@ -145,9 +145,5 @@ export class ToastManager extends Component<{}, {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    
-})
 
 export default ToastManager
