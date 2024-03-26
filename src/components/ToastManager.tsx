@@ -1,6 +1,7 @@
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native'
 import React, { Component } from 'react'
 import { Gesture, GestureDetector, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
+import Toast from './Toast'
 
 interface ToastOptions {
     duration?: number,
@@ -12,17 +13,20 @@ interface ToastOptions {
 }
 
 export class ToastManager extends Component<{}, {
+    visible: boolean
+    duration: number
     backgroundColor: string
     dismissGesture: any
     toastMessage: string
     showProgress: boolean
+    bounce: boolean
     autoDismiss: boolean
     centerText: boolean
     toastSpeed: number
     dismissMode: 'tap' | 'swipe'
 }> {
     defaultToastPosition = -Dimensions.get('window').height
-    defaultToastDuration = 3000
+    defaultToastDuration = 2000
 
     static toastInstance: ToastManager
   	progressValue: Animated.Value;
@@ -35,9 +39,12 @@ export class ToastManager extends Component<{}, {
         super(props)
         ToastManager.toastInstance = this
         this.state = {
+            visible: false,
+            duration: this.defaultToastDuration,
             autoDismiss: true,
             dismissMode: 'tap',
             showProgress: false,
+            bounce: true,
             centerText: false,
             toastSpeed: 500,
             toastMessage: "",
@@ -85,13 +92,20 @@ export class ToastManager extends Component<{}, {
     }
 
     show = (text: string, options?: ToastOptions) => {
+        this.hideAllToasts()
         let duration = options?.duration ?? this.defaultToastDuration
-        let autoDismiss = options?.autoDismiss !== false
+        let autoDismiss = options?.autoDismiss !== true
+
+        console.log("Showing toast on", this.props)
 
         this.setState({
             toastMessage: text,
             showProgress: options?.progress ?? false,
-            centerText: options?.centerText ?? false
+            centerText: options?.centerText ?? false,
+            bounce: options?.bounce ?? false,
+            visible: true,
+            duration,
+            autoDismiss
         })
 
         if (options?.dismissMode == 'swipe') {
@@ -104,105 +118,36 @@ export class ToastManager extends Component<{}, {
             })
         }
 
-        this.topValue.setValue(this.defaultToastPosition)
-        this.progressValue.setValue(Dimensions.get('window').width)
-
-        this.hideToastTimeout && clearTimeout(this.hideToastTimeout)
-
-        Animated.sequence([
-            options?.bounce ? (
-                Animated.spring(this.topValue, {
-                    toValue: -100,
-                    friction: 6,
-                    useNativeDriver: true,
-                })
-            ) : (
-                Animated.timing(this.topValue, {
-                    toValue: -100,
-                    useNativeDriver: true,
-                    duration: this.state.toastSpeed
-                })
-            ),
-            Animated.timing(this.progressValue, {
-                toValue: -10,
-                duration,
-                useNativeDriver: false
-            })
-        ]).start()
-
-        this.hideToastTimeout = setTimeout(() => {
-            if (autoDismiss) {
-                this.hideAllToasts()
-            }
-        }, duration + (options?.bounce ? 1500 : 0));
     }
 
     hideAllToasts = () => {
-        Animated.timing(this.topValue, {
-            toValue: this.defaultToastPosition,
-            useNativeDriver: true
-        }).start()
+        this.setState({
+            visible: false
+        })
     }
 
     render() {
         return (
-            <Animated.View
-                style={[styles.container, {
-                    top: 0,
-                    backgroundColor: this.state.backgroundColor,
-                    transform: [
-                        {
-                            translateY: this.topValue
-                        }
-                    ]
-                }]}
-            >
-                <GestureDetector
-                    gesture={this.state.dismissGesture}
-                >
-                    <View>
-                        <View
-                        style={{
-                            padding: 15,
-                            paddingTop: 180,
-                        }}
-                    >
-                        <Text style={{color: '#FFF', textAlign: this.state.centerText ? 'center' : 'left'}}>
-                            {this.state.toastMessage}
-                        </Text>
-                    </View>
-                    {
-                        this.state.showProgress && (
-                            <View
-                                style={{
-                                    backgroundColor: 'rgba(0, 0, 0, .2)',
-                                    height: 6,
-                                    alignItems: 'flex-start'
-                                }}
-                            >
-                                <Animated.View
-                                    style={{
-                                        backgroundColor: 'rgba(0, 0, 0, .2)',
-                                        flex: 1,
-                                        width: this.progressValue
-                                    }}
-                                ></Animated.View>
-                            </View>
-                        )
-                    }
-                    </View>
-                </GestureDetector>
-            </Animated.View>
+            <Toast
+                visible={this.state.visible}
+                duration={this.state.duration}
+                progress={this.state.showProgress}
+                bounce={this.state.bounce}
+                autoDismiss={this.state.autoDismiss}
+                centerText={this.state.centerText}
+                dismissGesture={this.state.dismissGesture}
+                style={{
+                    backgroundColor: this.state.backgroundColor
+                }}
+                message={this.state.toastMessage}
+                dismiss={this.hideAllToasts}
+            />
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        zIndex: 10000000000,
-        width: Dimensions.get('window').width,
-    }
+    
 })
 
 export default ToastManager

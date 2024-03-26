@@ -1,6 +1,6 @@
 {
   "name": "react-native-toast-alert",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "An awesome package for cool toast alerts in react-native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -36,7 +36,15 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "react",
+    "react-native-component",
+    "react-native-toast",
+    "react-native-alert",
+    "react-native-toast-message",
+    "react-native-alert-notification",
+    "react-native-toast-android",
+    "react-native-toast-ios"
   ],
   "repository": {
     "type": "git",
@@ -66,6 +74,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
+    "react-native-reanimated": "^3.8.0",
     "react-native-gesture-handler": "^2.15.0"
   },
   "packageManager": "yarn@3.6.1",
