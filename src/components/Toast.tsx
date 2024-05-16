@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, type ViewStyle } from 'react-native'
+import { Dimensions, Platform, StyleSheet, Text, View, type ViewStyle } from 'react-native'
 import React, { useEffect } from 'react'
 import { GestureDetector } from 'react-native-gesture-handler'
 import Animated, {Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated'
@@ -113,7 +113,7 @@ const Toast = ({
                     <View
                     style={{
                         padding: 15,
-                        paddingTop: 380,
+                        paddingTop: Platform.OS == 'ios' ? 370 : 320,
                     }}
                 >
                     <Text style={{color: '#FFF', textAlign: centerText ? 'center' : 'left'}}>
