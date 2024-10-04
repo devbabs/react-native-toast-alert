@@ -95,6 +95,8 @@ Each of the methods on the toast take 2 parameters: The toast message and an opt
 | Option | Description | Type | Default Value |
 | --- | --- | --- | --- |
 | duration | How long the toast will be visible for (milliseconds) | number | 2000 |
+| withIcon | If there should be an icon in the alert | boolean | true |
+| icon | Custom icon image. Works only if `withIcon` is set to `true` | ImageSourcePropType | undefined |
 | progress | Show progress bar | boolean | false |
 | bounce | Add bounce effect while showing toast | boolean | false |
 | autoDismiss | Dismiss toast automatically | boolean | true |

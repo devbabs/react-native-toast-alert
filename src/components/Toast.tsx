@@ -1,4 +1,4 @@
-import { Dimensions, Platform, StyleSheet, Text, View, type ViewStyle } from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, View, type ViewStyle, type ImageSourcePropType } from 'react-native'
 import React, { useEffect } from 'react'
 import { GestureDetector } from 'react-native-gesture-handler'
 import Animated, {Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated'
@@ -7,12 +7,13 @@ const Toast = ({
     message,
     visible = false,
     duration = 2000,
-    speed = 700,
+    speed = 300,
     progress = false,
     bounce = false,
     autoDismiss = false,
     centerText = false,
     dismissGesture,
+    icon = undefined,
     style = {},
     dismiss
 }: {
@@ -24,12 +25,13 @@ const Toast = ({
     bounce?: boolean,
     autoDismiss?: boolean,
     centerText?: boolean,
+    icon?: ImageSourcePropType,
     dismissGesture: any,
-    style?: ViewStyle,
+    style?: ViewStyle | undefined | ViewStyle[],
     dismiss: () => void
 }) => {
     const initialToastPosition = -Dimensions.get('window').height
-    const toastVisiblePosition = -300
+    const toastVisiblePosition = 0
     const progressValue = useSharedValue(Dimensions.get('window').width)
     const topValue = useSharedValue(initialToastPosition)
 
@@ -44,7 +46,6 @@ const Toast = ({
 
     useEffect(() => {
         if (visible) {
-            console.log("Bounce is", bounce)
             topValue.value = initialToastPosition
             animateProgressBar()
             if (bounce) {
@@ -78,7 +79,7 @@ const Toast = ({
     }, [visible])
 
     const animateProgressBar = () => {
-        progressValue.value = Dimensions.get('window').width
+        progressValue.value = Dimensions.get('window').width - 20
         progressValue.value = withTiming(0, {
             duration: duration + 2000,
         })
@@ -88,9 +89,9 @@ const Toast = ({
         return {
             transform: [
                 {
-                    translateY: topValue.value
+                    translateY: topValue.value,
                 }
-            ]
+            ],
         }
     })
 
@@ -100,10 +101,39 @@ const Toast = ({
         }
     })
 
+    const Icon = () => {
+        if (!icon) {
+            return null
+        }
+
+        return (
+            <View
+                style={{
+                    height: 25,
+                    width: 25,
+                    borderRadius: 100,
+                    backgroundColor: 'rgba(0, 0, 0, .1)',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Image
+                    source={icon}
+                    style={{
+                        width: 14,
+                        height: 14,
+                    }}
+                    resizeMode={'contain'}
+                />
+            </View>
+        )
+    }
+
     return (
         <Animated.View
             style={[styles.container, {
                 top: 0,
+                maxHeight: Dimensions.get('window').height - 20
             }, animatedContainerStyle, style]}
         >
             <GestureDetector
@@ -111,33 +141,45 @@ const Toast = ({
             >
                 <View>
                     <View
-                    style={{
-                        padding: 15,
-                        paddingTop: Platform.OS == 'ios' ? 370 : 320,
-                    }}
-                >
-                    <Text style={{color: '#FFF', textAlign: centerText ? 'center' : 'left'}}>
-                        {message}
-                    </Text>
-                </View>
-                {
-                    progress && (
-                        <View
+                        style={{
+                            padding: 10,
+                            minHeight: 45,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 5
+                        }}
+                    >
+                        <Icon />
+                        <Text
                             style={{
-                                backgroundColor: 'rgba(0, 0, 0, .2)',
-                                height: 6,
-                                alignItems: 'flex-start'
+                                color: '#FFF',
+                                textAlign: centerText ? 'center' : 'left',
+                                flex: 1
                             }}
                         >
-                            <Animated.View
-                                style={[{
+                            {message}
+                        </Text>
+                    </View>
+                    {
+                        progress && (
+                            <View
+                                style={{
                                     backgroundColor: 'rgba(0, 0, 0, .2)',
-                                    flex: 1,
-                                }, animatedProgressBar]}
-                            ></Animated.View>
-                        </View>
-                    )
-                }
+                                    height: 6,
+                                    alignItems: 'flex-start',
+                                    borderRadius: 5
+                                }}
+                            >
+                                <Animated.View
+                                    style={[{
+                                        backgroundColor: 'rgba(0, 0, 0, .2)',
+                                        flex: 1,
+                                        borderRadius: 5
+                                    }, animatedProgressBar]}
+                                ></Animated.View>
+                            </View>
+                        )
+                    }
                 </View>
             </GestureDetector>
         </Animated.View>
@@ -148,7 +190,10 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         zIndex: 10000000000,
-        width: Dimensions.get('window').width,
+        width: Dimensions.get('window').width - 20,
+        marginHorizontal: 10,
+        marginTop: 15,
+        borderRadius: 5
     }
 })
 

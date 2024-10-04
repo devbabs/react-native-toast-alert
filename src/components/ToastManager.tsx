@@ -1,4 +1,4 @@
-import { Animated, Dimensions } from 'react-native'
+import { Animated, Dimensions, type ImageSourcePropType } from 'react-native'
 import React, { Component } from 'react'
 import { Gesture, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 import Toast from './Toast'
@@ -9,13 +9,22 @@ interface ToastOptions {
     bounce?: boolean,
     autoDismiss?: boolean,
     centerText?: boolean,
-    dismissMode?: 'tap' | 'swipe'
+    dismissMode?: 'tap' | 'swipe',
+    icon?: ImageSourcePropType
+    withIcon?: boolean
+}
+
+interface StyledToastOptions {
+    backgroundColor?: string,
+    textColor?: string,
+    fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined
 }
 
 export class ToastManager extends Component<{}, {
     visible: boolean
     duration: number
     backgroundColor: string
+    style?: StyledToastOptions
     dismissGesture: any
     toastMessage: string
     showProgress: boolean
@@ -23,6 +32,8 @@ export class ToastManager extends Component<{}, {
     autoDismiss: boolean
     centerText: boolean
     toastSpeed: number
+    icon?: ImageSourcePropType
+    withIcon?: boolean
     dismissMode: 'tap' | 'swipe'
 }> {
     defaultToastPosition = -Dimensions.get('window').height
@@ -49,8 +60,10 @@ export class ToastManager extends Component<{}, {
             toastSpeed: 500,
             toastMessage: "",
             backgroundColor: '#aaa',
+            style: undefined,
+            icon: undefined,
+            withIcon: true,
             dismissGesture: Gesture.Tap().runOnJS(true).onEnd(() => {
-                console.log("Tapped to duss")
                 this.hideAllToasts()
             })
         }
@@ -60,64 +73,135 @@ export class ToastManager extends Component<{}, {
     }
 
     static success(text:any, options?: ToastOptions){
-        ToastManager.toastInstance.setState({
-            backgroundColor: '#14A44D'
-        })
-
         ToastManager.toastInstance.show(text, options)
+
+        setTimeout(() => {
+            ToastManager.toastInstance.setState({
+                backgroundColor: '#14A44D',
+            })
+
+            if (options?.withIcon) {
+                ToastManager.toastInstance.setState({
+                    icon: options?.icon ?? require('../assets/icons/check.png')
+                })
+            } else {
+                ToastManager.toastInstance.setState({
+                    icon: undefined
+                })
+            }
+        }, 500);
     }
 
     static info(text:any, options?: ToastOptions){
-        ToastManager.toastInstance.setState({
-            backgroundColor: '#54B4D3'
-        })
-
         ToastManager.toastInstance.show(text, options)
+
+        setTimeout(() => {
+            ToastManager.toastInstance.setState({
+                backgroundColor: '#54B4D3',
+            })
+
+            if (options?.withIcon) {
+                ToastManager.toastInstance.setState({
+                    icon: options?.icon ?? require('../assets/icons/info.png')
+                })
+            } else {
+                ToastManager.toastInstance.setState({
+                    icon: undefined
+                })
+            }
+        }, 500);
     }
 
     static error(text:any, options?: ToastOptions){
-        ToastManager.toastInstance.setState({
-            backgroundColor: '#DC4C64'
-        })
-
         ToastManager.toastInstance.show(text, options)
+
+        setTimeout(() => {
+            ToastManager.toastInstance.setState({
+                backgroundColor: '#DC4C64',
+            })
+
+            if (options?.withIcon) {
+                ToastManager.toastInstance.setState({
+                    icon: options?.icon ?? require('../assets/icons/error.png')
+                })
+            } else {
+                ToastManager.toastInstance.setState({
+                    icon: undefined
+                })
+            }
+        }, 500);
     }
 
     static warning(text:any, options?: ToastOptions){
-        ToastManager.toastInstance.setState({
-            backgroundColor: '#E4A11B'
-        })
-
         ToastManager.toastInstance.show(text, options)
+
+        setTimeout(() => {
+            ToastManager.toastInstance.setState({
+                backgroundColor: '#E4A11B',
+            })
+
+            if (options?.withIcon) {
+                ToastManager.toastInstance.setState({
+                    icon: options?.icon ?? require('../assets/icons/info.png')
+                })
+            } else {
+                ToastManager.toastInstance.setState({
+                    icon: undefined
+                })
+            }
+        }, 500);
+    }
+
+    static styled(text:any, style: StyledToastOptions, options?: ToastOptions){
+        ToastManager.toastInstance.show(text, options)
+
+        setTimeout(() => {
+            ToastManager.toastInstance.setState({
+                backgroundColor: '#E4A11B',
+                style,
+            })
+
+            if (options?.withIcon) {
+                ToastManager.toastInstance.setState({
+                    icon: options?.icon ?? require('../assets/icons/info.png')
+                })
+            } else {
+                ToastManager.toastInstance.setState({
+                    icon: undefined
+                })
+            }
+        }, 500);
     }
 
     show = (text: string, options?: ToastOptions) => {
         this.hideAllToasts()
-        let duration = options?.duration ?? this.defaultToastDuration
-        let autoDismiss = options?.autoDismiss !== true
 
-        console.log("Showing toast on", this.props)
+        setTimeout(() => {
+            let duration = options?.duration ?? this.defaultToastDuration
+            let autoDismiss = options?.autoDismiss !== true
 
-        this.setState({
-            toastMessage: text,
-            showProgress: options?.progress ?? false,
-            centerText: options?.centerText ?? false,
-            bounce: options?.bounce ?? false,
-            visible: true,
-            duration,
-            autoDismiss
-        })
+            console.log("Showing toast on", this.props)
 
-        if (options?.dismissMode == 'swipe') {
             this.setState({
-                dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
-                    if (gesture.translationY < 0) {
-                        this.hideAllToasts()
-                    }
-                })
+                toastMessage: text,
+                showProgress: options?.progress ?? false,
+                centerText: options?.centerText ?? false,
+                bounce: options?.bounce ?? false,
+                visible: true,
+                duration,
+                autoDismiss
             })
-        }
 
+            if (options?.dismissMode == 'swipe') {
+                this.setState({
+                    dismissGesture: Gesture.Pan().runOnJS(true).onUpdate((gesture: GestureUpdateEvent<PanGestureHandlerEventPayload>) => {
+                        if (gesture.translationY < 0) {
+                            this.hideAllToasts()
+                        }
+                    })
+                })
+            }
+        }, 200);
     }
 
     hideAllToasts = () => {
@@ -136,10 +220,11 @@ export class ToastManager extends Component<{}, {
                 autoDismiss={this.state.autoDismiss}
                 centerText={this.state.centerText}
                 dismissGesture={this.state.dismissGesture}
-                style={{
+                style={[this.state.style ?? {}, {
                     backgroundColor: this.state.backgroundColor
-                }}
+                }]}
                 message={this.state.toastMessage}
+                icon={this.state.icon}
                 dismiss={this.hideAllToasts}
             />
         )

@@ -1,6 +1,6 @@
 {
   "name": "react-native-toast-alert",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "An awesome package for cool toast alerts in react-native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -74,8 +74,8 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-reanimated": "^3.8.0",
-    "react-native-gesture-handler": "^2.15.0"
+    "react-native-reanimated": "*",
+    "react-native-gesture-handler": "*"
   },
   "packageManager": "yarn@3.6.1",
   "jest": {
