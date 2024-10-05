@@ -80,7 +80,7 @@ export class ToastManager extends Component<{}, {
                 backgroundColor: '#14A44D',
             })
 
-            if (options?.withIcon) {
+            if (options?.withIcon !== false) {
                 ToastManager.toastInstance.setState({
                     icon: options?.icon ?? require('../assets/icons/check.png')
                 })
@@ -100,7 +100,7 @@ export class ToastManager extends Component<{}, {
                 backgroundColor: '#54B4D3',
             })
 
-            if (options?.withIcon) {
+            if (options?.withIcon !== false) {
                 ToastManager.toastInstance.setState({
                     icon: options?.icon ?? require('../assets/icons/info.png')
                 })
@@ -120,7 +120,7 @@ export class ToastManager extends Component<{}, {
                 backgroundColor: '#DC4C64',
             })
 
-            if (options?.withIcon) {
+            if (options?.withIcon !== false) {
                 ToastManager.toastInstance.setState({
                     icon: options?.icon ?? require('../assets/icons/error.png')
                 })
@@ -140,7 +140,7 @@ export class ToastManager extends Component<{}, {
                 backgroundColor: '#E4A11B',
             })
 
-            if (options?.withIcon) {
+            if (options?.withIcon !== false) {
                 ToastManager.toastInstance.setState({
                     icon: options?.icon ?? require('../assets/icons/info.png')
                 })
@@ -161,7 +161,7 @@ export class ToastManager extends Component<{}, {
                 style,
             })
 
-            if (options?.withIcon) {
+            if (options?.withIcon !== false) {
                 ToastManager.toastInstance.setState({
                     icon: options?.icon ?? require('../assets/icons/info.png')
                 })
