@@ -1,4 +1,5 @@
-import { Dimensions, Image, StyleSheet, Text, View, type ViewStyle, type ImageSourcePropType } from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, View, type ViewStyle, type ImageSourcePropType, Platform } from 'react-native'
+import type { ReactNode } from 'react'
 import React, { useEffect } from 'react'
 import { GestureDetector } from 'react-native-gesture-handler'
 import Animated, {Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming} from 'react-native-reanimated'
@@ -25,13 +26,13 @@ const Toast = ({
     bounce?: boolean,
     autoDismiss?: boolean,
     centerText?: boolean,
-    icon?: ImageSourcePropType,
+    icon?: ImageSourcePropType | ReactNode,
     dismissGesture: any,
     style?: ViewStyle | undefined | ViewStyle[],
     dismiss: () => void
 }) => {
     const initialToastPosition = -Dimensions.get('window').height
-    const toastVisiblePosition = 0
+    const toastVisiblePosition = Platform.OS == 'ios' ? 50 : 30
     const progressValue = useSharedValue(Dimensions.get('window').width)
     const topValue = useSharedValue(initialToastPosition)
 
@@ -101,11 +102,30 @@ const Toast = ({
         }
     })
 
-    const Icon = () => {
+    const IconComponent = () => {
         if (!icon) {
             return null
         }
 
+        // If icon is a React element, render it directly
+        if (React.isValidElement(icon)) {
+            return (
+                <View
+                    style={{
+                        height: 25,
+                        width: 25,
+                        borderRadius: 100,
+                        backgroundColor: 'rgba(0, 0, 0, .1)',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    {icon}
+                </View>
+            )
+        }
+
+        // Otherwise render as image source
         return (
             <View
                 style={{
@@ -118,7 +138,7 @@ const Toast = ({
                 }}
             >
                 <Image
-                    source={icon}
+                    source={icon as ImageSourcePropType}
                     style={{
                         width: 14,
                         height: 14,
@@ -149,7 +169,7 @@ const Toast = ({
                             gap: 5
                         }}
                     >
-                        <Icon />
+                        <IconComponent />
                         <Text
                             style={{
                                 color: '#FFF',

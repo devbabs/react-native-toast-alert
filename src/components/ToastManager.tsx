@@ -1,4 +1,5 @@
 import { Animated, Dimensions, type ImageSourcePropType } from 'react-native'
+import type { ReactNode } from 'react'
 import React, { Component } from 'react'
 import { Gesture, type GestureUpdateEvent, type PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 import Toast from './Toast'
@@ -10,7 +11,7 @@ interface ToastOptions {
     autoDismiss?: boolean,
     centerText?: boolean,
     dismissMode?: 'tap' | 'swipe',
-    icon?: ImageSourcePropType
+    icon?: ImageSourcePropType | ReactNode
     withIcon?: boolean
 }
 
@@ -32,7 +33,7 @@ export class ToastManager extends Component<{}, {
     autoDismiss: boolean
     centerText: boolean
     toastSpeed: number
-    icon?: ImageSourcePropType
+    icon?: ImageSourcePropType | ReactNode
     withIcon?: boolean
     dismissMode: 'tap' | 'swipe'
 }> {
@@ -178,7 +179,7 @@ export class ToastManager extends Component<{}, {
 
         setTimeout(() => {
             let duration = options?.duration ?? this.defaultToastDuration
-            let autoDismiss = options?.autoDismiss !== true
+            let autoDismiss = options?.autoDismiss ?? true
 
             console.log("Showing toast on", this.props)
 
